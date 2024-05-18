@@ -15,6 +15,46 @@
         width: 100%;
     }
     </style>-->
+    <script>
+      window.onload = function () {
+        var textElement = document.getElementById("date");
+        const month = new Date().getMonth() + 2; // Add 1 for next month, and 1 again because months are zero-based
+        textElement.textContent = formatDate(getNextFirstThursday(month));
+      };
+
+      function getNextFirstThursday(month) {
+        const today = new Date();
+        const year = today.getFullYear();
+        let nextFirstThursday = new Date(year, month - 1, 1); // Month parameter is zero-based
+
+        while (nextFirstThursday.getDay() !== 4) {
+          // Thursday is index 4 (0-indexed)
+          nextFirstThursday.setDate(nextFirstThursday.getDate() + 1);
+        }
+
+        if (nextFirstThursday < today) {
+          return getNextFirstThursday(month + 1);
+        }
+
+        return nextFirstThursday;
+      }
+
+      function formatDate(date) {
+        var day = date.getDate();
+        var month = date.getMonth() + 1; // Months are zero-indexed
+        var year = date.getFullYear();
+
+        // Pad single digit day and month with leading zero
+        if (day < 10) {
+          day = "0" + day;
+        }
+        if (month < 10) {
+          month = "0" + month;
+        }
+
+        return day + "." + month + "." + year;
+      }
+    </script>
 </head>
 
 <body style='
